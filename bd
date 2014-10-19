@@ -1,0 +1,32 @@
+﻿-- Database: converter
+
+-- DROP DATABASE converter;
+
+CREATE DATABASE converter
+  WITH OWNER = postgres
+       ENCODING = 'UTF8'
+       TABLESPACE = pg_default
+       LC_COLLATE = 'en_US.UTF-8'
+       LC_CTYPE = 'en_US.UTF-8'
+       CONNECTION LIMIT = -1;
+
+create table cancion(
+	id serial not null primary key,
+	nombre varchar not null,
+	ruta varchar not null,
+	partes varchar null,
+	duracion varchar null
+);
+
+create table cancion_partes(
+	id serial not null primary key,
+	id_original integer null,
+	ruta varchar null
+);
+
+
+alter table cancion_partes
+add constraint fk_original_partes
+foreign key(id_original)
+references cancion(id);
+
