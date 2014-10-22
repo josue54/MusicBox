@@ -38,7 +38,7 @@ $callback = function($msg) {
   }
 
 
-
+echo($nombre);
 
   	//$nombreArchivo = basename($origen); 
   	//$nombreSinExtension = end(array_reverse(explode(".", $nombreArchivo)));
