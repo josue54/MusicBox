@@ -13,15 +13,20 @@ class ArchivoController extends \BaseController {
 	 */
 	public function index()
 	{
-		
+	    if(isset($estado)){
+
+	    }
+
+	    else{
+	    	$estado="esperando Datos del usuario";
+	    }
+
 		$this->layout->titulo = 'MusicBox';
-		$this->layout->nest(
-			'content','archivo.index');
-
-
-		//return Response::Json($aviones);
-	}
-
+		$this->layout->estado = $estado;
+	$this->layout->nest(
+			'content',
+			'archivo.index');
+}
 
 	/**
 	 * Show the form for creating a new resource.
@@ -41,7 +46,8 @@ class ArchivoController extends \BaseController {
 	 */
 	public function store()
 	{
-		
+
+		$id_user;
 		$file   = Input::file('file');
  		$partes   = Input::get('partes');
  		$tiempo   = Input::get('tiempo');
@@ -61,7 +67,9 @@ class ArchivoController extends \BaseController {
 				 $ruta=$subidos."/".$nombre;
 				$insercion = Archivo::store($nombre,$ruta,$partes,$tiempo);
 				$this->enviarColas(json_encode($insercion),$insercion->id);
-				return Response::json($insercion->id);
+				$id_user=$insercion->id;
+				echo($id_user);
+				
 			}
 			else {
 				return Response::json("error");
@@ -71,6 +79,8 @@ class ArchivoController extends \BaseController {
 
 			return Response::json("imposible dividir entre ambas");
 		}
+		$estado="Partiendo espere";
+		 return Redirect::action('ArchivoController@index');
 	}
 
 	/**
@@ -118,6 +128,7 @@ class ArchivoController extends \BaseController {
 		$channel->basic_publish($msg, '', 'hello');
 		$channel->close();
 		$connection->close();
+
 	}
 
 

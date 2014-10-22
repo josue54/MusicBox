@@ -8,6 +8,6 @@
 
 	
 	{{ $content }}
-	<p>Esto es una prueba</p>
+	<p>{{ $estado }}</p>
 </body>
 </html>
